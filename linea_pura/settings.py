@@ -136,6 +136,7 @@ EMAIL_USE_TLS = False
 EMAIL_HOST_USER = 'rmorales@proyectoweb.website'
 EMAIL_HOST_PASSWORD = 'Ramiro2026/'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_TIMEOUT = 5  # timeout de 5s para que no cuelgue en render
 
 
 # Django REST Framework
