@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Registrarse — Línea Pura Arquitectura{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'studio/studio.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Crear cuenta</h1>
+    <p>Acceso exclusivo para usuarios autorizados</p>
+</section>
+
+<section class="auth-section">
+    <form method="post" class="auth-form" id="form-registro" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+            <small class="form-help">{{ field.help_text }}</small>
+            {% endif %}
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn" id="btn-registro">Crear cuenta</button>
+        <p class="auth-link">¿Ya tenés cuenta? <a href="{% url 'login' %}">Iniciá sesión</a></p>
+        <p class="auth-link">¿Ya te registraste y recibiste el código? <a href="{% url 'validar' %}">Validar cuenta</a></p>
+    </form>
+</section>
+
+{% block extra_js %}
+<script>
+document.getElementById('form-registro').addEventListener('submit', function(e) {
+    let valid = true;
+    const firstName = document.getElementById('id_first_name');
+    const lastName = document.getElementById('id_last_name');
+    const email = document.getElementById('id_email');
+    const pass1 = document.getElementById('id_password1');
+    const pass2 = document.getElementById('id_password2');
+
+    // Limpiar errores previos JS
+    document.querySelectorAll('.js-error').forEach(el => el.remove());
+
+    function showError(field, msg) {
+        const err = document.createElement('ul');
+        err.className = 'errorlist js-error';
+        err.innerHTML = `<li>${msg}</li>`;
+        field.parentNode.appendChild(err);
+        valid = false;
+    }
+
+    if (!firstName.value.trim()) showError(firstName, 'El nombre es obligatorio.');
+    if (!lastName.value.trim()) showError(lastName, 'El apellido es obligatorio.');
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        showError(email, 'Ingresá un correo electrónico válido.');
+    }
+    if (pass1.value.length < 8) showError(pass1, 'La contraseña debe tener al menos 8 caracteres.');
+    if (pass1.value !== pass2.value) showError(pass2, 'Las contraseñas no coinciden.');
+
+    if (!valid) e.preventDefault();
+});
+</script>
+{% endblock %}
+{% endblock %}

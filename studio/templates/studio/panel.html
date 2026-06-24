@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panel de Administración — Línea Pura Arquitectura{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'studio/studio.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Panel de Administración</h1>
+    <p>Bienvenido/a, {{ user.first_name|default:user.username }}</p>
+</section>
+
+<section class="panel-section">
+
+    <!-- Resumen Estadístico -->
+    <div class="panel-stats">
+        <h2 class="panel-stats-titulo">Resumen estadístico</h2>
+        <div class="stats-grid">
+            <div class="stat-card stat-total">
+                <span class="stat-numero">{{ total }}</span>
+                <span class="stat-label">Consultas totales</span>
+            </div>
+            {% for categoria, cantidad in por_categoria.items %}
+            <div class="stat-card">
+                <span class="stat-numero">{{ cantidad }}</span>
+                <span class="stat-label">{{ categoria }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Tabla de consultas -->
+    <div class="panel-tabla-wrapper">
+        <h2 class="panel-tabla-titulo">Solicitudes recibidas</h2>
+        {% if consultas %}
+        <div class="tabla-scroll">
+            <table class="panel-tabla">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Categoría</th>
+                        <th>Mensaje</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in consultas %}
+                    <tr>
+                        <td>{{ c.id }}</td>
+                        <td>{{ c.fecha|date:"d/m/Y H:i" }}</td>
+                        <td>{{ c.nombre }}</td>
+                        <td><a href="mailto:{{ c.email }}">{{ c.email }}</a></td>
+                        <td>
+                            <span class="badge badge-{{ c.categoria|lower|cut:' '|cut:'.' }}">
+                                {{ c.categoria }}
+                            </span>
+                        </td>
+                        <td class="mensaje-cell">{{ c.mensaje|truncatechars:80 }}</td>
+                        <td class="acciones-cell">
+                            <a href="{% url 'panel_editar' c.pk %}" class="btn-tabla btn-editar">Editar</a>
+                            <form method="post" action="{% url 'panel_eliminar' c.pk %}" style="display:inline;"
+                                  onsubmit="return confirm('¿Eliminar esta consulta?')">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-tabla btn-eliminar">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="panel-vacio">Todavía no se recibieron consultas.</p>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home — Línea Pura Arquitectura{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'studio/studio.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-image">
+        <img src="{% static 'studio/images/hero.jpg' %}" alt="Línea Pura Arquitectura">
+    </div>
+    <div class="hero-texto">
+        <span class="hero-tag">Buenos Aires — Desde 2010</span>
+        <h1>Arquitectura<br>sin ruido</h1>
+        <p>Diseño minimalista y funcional</p>
+        <a href="{% url 'proyectos' %}" class="btn">Ver proyectos</a>
+    </div>
+</section>
+
+<section class="intro">
+    <div class="intro-item">
+        <div class="intro-numero">01</div>
+        <div class="intro-contenido">
+            <h2>Nuestro enfoque</h2>
+            <p>Creemos que la arquitectura debe ser honesta, clara y atemporal. Cada proyecto nace de escuchar al cliente y entender el espacio.</p>
+            <a href="{% url 'nosotros' %}" class="link-sutil">Conocer el estudio →</a>
+        </div>
+    </div>
+    <div class="intro-item">
+        <div class="intro-numero">02</div>
+        <div class="intro-contenido">
+            <h2>Proceso de diseño</h2>
+            <p>Cada proyecto comienza con una escucha profunda. Analizamos el entorno, la luz y las necesidades para crear espacios únicos y funcionales.</p>
+            <a href="{% url 'proyectos' %}" class="link-sutil">Ver proyectos →</a>
+        </div>
+    </div>
+    <div class="intro-item">
+        <div class="intro-numero">03</div>
+        <div class="intro-contenido">
+            <h2>Materiales y detalle</h2>
+            <p>Trabajamos con materiales nobles y duraderos. La atención al detalle es lo que diferencia un espacio ordinario de uno extraordinario.</p>
+            <a href="{% url 'contacto' %}" class="link-sutil">Hablemos →</a>
+        </div>
+    </div>
+</section>
+
+<section class="home-proyectos">
+    <div class="home-proyectos-header">
+        <h2>Proyectos recientes</h2>
+        <a href="{% url 'proyectos' %}" class="link-sutil">Ver todos →</a>
+    </div>
+    <div class="home-proyectos-grid">
+        <div class="home-proyecto-grande">
+            <img src="{% static 'studio/images/proyecto1.jpg' %}" alt="Casa Minimalista">
+            <div class="proyecto-overlay">
+                <h3>Casa Minimalista</h3>
+                <p>Buenos Aires, 2024</p>
+            </div>
+        </div>
+        <div class="home-proyectos-small">
+            <div class="home-proyecto-chico">
+                <img src="{% static 'studio/images/proyecto2.jpg' %}" alt="Estudio Corporativo">
+                <div class="proyecto-overlay">
+                    <h3>Estudio Corporativo</h3>
+                    <p>Palermo, 2023</p>
+                </div>
+            </div>
+            <div class="home-proyecto-chico">
+                <img src="{% static 'studio/images/proyecto3.jpg' %}" alt="Loft Industrial">
+                <div class="proyecto-overlay">
+                    <h3>Loft Industrial</h3>
+                    <p>San Telmo, 2023</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if clima %}
+<!-- Sección con datos de API externa: Open-Meteo (clima actual en Buenos Aires) -->
+<!-- API: https://api.open-meteo.com/v1/forecast -->
+<section class="clima-section">
+    <div class="clima-inner">
+        <div class="clima-texto">
+            <span class="clima-tag">Datos en tiempo real — Open-Meteo API</span>
+            <h2>Condiciones actuales en Buenos Aires</h2>
+            <p>En el estudio de arquitectura, conocer el entorno es esencial. El clima local influye directamente en decisiones de diseño: orientación, ventilación, materiales y sistemas constructivos.</p>
+        </div>
+        <div class="clima-datos">
+            <div class="clima-dato">
+                <span class="clima-valor">{{ clima.temperatura }}°C</span>
+                <span class="clima-label">Temperatura</span>
+            </div>
+            <div class="clima-dato">
+                <span class="clima-valor">{{ clima.viento }} km/h</span>
+                <span class="clima-label">Viento</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="home-cta">
+    <h2>¿Tenés un proyecto en mente?</h2>
+    <a href="{% url 'contacto' %}" class="btn">Hablemos</a>
+</section>
+
+{% endblock %}

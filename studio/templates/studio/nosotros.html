@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nosotros — Línea Pura Arquitectura{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'studio/studio.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Sobre Nosotros</h1>
+</section>
+
+<section class="nosotros-page">
+    <div class="nosotros-split">
+        <div class="nosotros-texto">
+            <h2>Quiénes somos</h2>
+            <p>Línea Pura Arquitectura es un estudio fundado en 2010 por Martín Rodríguez y Ana Gómez, con foco en diseño minimalista, funcional y sostenible.</p>
+            <p>Trabajamos con cada cliente para entender sus necesidades y traducirlas en espacios que transmitan orden, elegancia y simplicidad.</p>
+        </div>
+        <figure class="nosotros-foto">
+            <img src="{% static 'studio/images/equipo-estudio.png' %}" alt="Tres integrantes del estudio Línea Pura Arquitectura en el taller" width="900" height="1100">
+        </figure>
+    </div>
+    <div class="nosotros-equipo">
+        <h2>El equipo</h2>
+        <div class="equipo-grid">
+            <div class="miembro">
+                <h3>Martín Rodríguez</h3>
+                <p>Socio fundador — Arquitecto UBA</p>
+            </div>
+            <div class="miembro">
+                <h3>Ana Gómez</h3>
+                <p>Socia fundadora — Arquitecta FADU</p>
+            </div>
+            <div class="miembro">
+                <h3>Lucía Fernández</h3>
+                <p>Arquitecta — Diseño y obra</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

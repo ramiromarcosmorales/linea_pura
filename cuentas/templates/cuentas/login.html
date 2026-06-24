@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Iniciar sesión — Línea Pura Arquitectura{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'studio/studio.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Iniciar sesión</h1>
+    <p>Acceso al panel de administración</p>
+</section>
+
+<section class="auth-section">
+    <form method="post" class="auth-form" id="form-login" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn" id="btn-login">Ingresar</button>
+        <p class="auth-link">¿No tenés cuenta? <a href="{% url 'registro' %}">Registrate</a></p>
+        <p class="auth-link">¿Ya te registraste y recibiste el código? <a href="{% url 'validar' %}">Validar cuenta</a></p>
+    </form>
+</section>
+
+{% block extra_js %}
+<script>
+document.getElementById('form-login').addEventListener('submit', function(e) {
+    let valid = true;
+    const username = document.getElementById('id_username');
+    const password = document.getElementById('id_password');
+
+    document.querySelectorAll('.js-error').forEach(el => el.remove());
+
+    function showError(field, msg) {
+        const err = document.createElement('ul');
+        err.className = 'errorlist js-error';
+        err.innerHTML = `<li>${msg}</li>`;
+        field.parentNode.appendChild(err);
+        valid = false;
+    }
+
+    if (!username.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username.value)) {
+        showError(username, 'Ingresá un correo electrónico válido.');
+    }
+    if (!password.value.trim()) showError(password, 'La contraseña es obligatoria.');
+
+    if (!valid) e.preventDefault();
+});
+</script>
+{% endblock %}
+{% endblock %}

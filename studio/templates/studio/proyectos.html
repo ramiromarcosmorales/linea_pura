@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Proyectos — Línea Pura Arquitectura{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'studio/studio.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Proyectos</h1>
+    <p>Una selección de nuestros trabajos más recientes</p>
+</section>
+
+<section class="proyectos-grid">
+    <div class="proyecto-card">
+        <img src="{% static 'studio/images/proyecto1.jpg' %}" alt="Casa Minimalista">
+        <div class="proyecto-info">
+            <h3>Casa Minimalista</h3>
+            <p class="proyecto-meta">Residencia privada — Buenos Aires, 2024</p>
+            <p class="proyecto-desc">Reforma integral con ampliación hacia el jardín. Se priorizó la luz natural, materiales claros y un único gesto arquitectónico que une living y cocina en un solo espacio fluido.</p>
+        </div>
+    </div>
+    <div class="proyecto-card">
+        <img src="{% static 'studio/images/proyecto2.jpg' %}" alt="Estudio Corporativo">
+        <div class="proyecto-info">
+            <h3>Estudio Corporativo</h3>
+            <p class="proyecto-meta">Oficinas — Palermo, 2023</p>
+            <p class="proyecto-desc">Nuevas oficinas para un equipo híbrido: salas chicas para concentración, un área común amplia y mobiliario a medida. El cliente buscaba un ambiente sobrio pero cálido para recibir clientes.</p>
+        </div>
+    </div>
+    <div class="proyecto-card">
+        <img src="{% static 'studio/images/proyecto3.jpg' %}" alt="Loft Industrial">
+        <div class="proyecto-info">
+            <h3>Loft Industrial</h3>
+            <p class="proyecto-meta">Vivienda — San Telmo, 2023</p>
+            <p class="proyecto-desc">Antigua fábrica convertida en vivienda. Se respetaron vigas y mampostería a la vista y se sumaron cerramientos livianos para ordenar dormitorios sin perder la sensación de volumen único.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

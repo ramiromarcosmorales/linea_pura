@@ -1,0 +1,25 @@
+<header class="site-header">
+    <div class="header-logo">
+        <a href="{% url 'home' %}">Línea Pura</a>
+    </div>
+    <input type="checkbox" id="nav-toggle" class="nav-checkbox">
+    <label for="nav-toggle" class="nav-burger" aria-label="Abrir o cerrar menú">
+        <span></span>
+        <span></span>
+        <span></span>
+    </label>
+    <nav class="header-nav" aria-label="Navegación principal">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'proyectos' %}">Proyectos</a></li>
+            <li><a href="{% url 'nosotros' %}">Nosotros</a></li>
+            <li><a href="{% url 'contacto' %}">Contacto</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'panel' %}">Panel</a></li>
+            <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Acceso</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
