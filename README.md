@@ -24,7 +24,7 @@
 ---
 
 ### Detalles Técnicos
-* **Formularios:** Django Forms (`studio/forms.py`) con validaciones JS en `static/studio/js/contacto.js`.
+* **Formularios:** Django Forms (`studio/forms.py`) con validaciones JS inline en `studio/templates/studio/contacto.html`.
 * **Clasificación de Mensajes:** Modelo `Consulta` (`studio/models.py`) que clasifica automáticamente el mensaje en base a palabras clave (Comercial, Técnica, RRHH o General).
 * **Autenticación restringida:** Registro (`/cuentas/registro/`) limitado a la tabla `UsuarioPermitido`. Envío de código de validación, confirmación en `/cuentas/validar/` y posterior inicio de sesión.
 * **Panel de Administración:** Ruta protegida en `/panel/` con métricas (cantidad total y por categoría) y listado de consultas para visualizar, editar y eliminar.
