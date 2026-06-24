@@ -1,81 +1,63 @@
-# Línea Pura Arquitectura
+# Segundo Parcial - Programación Web II
 
-Sitio web del estudio de arquitectura Línea Pura, desarrollado con Django.
+**Alumno:** Ramiro Marcos Morales  
+**Matrícula:** 149386  
+**Carrera:** Tecnicatura en Programación de Sistemas  
+**Materia:** Programación Web II  
+**Docente:** Analía Villegas  
 
-## Páginas
+---
 
-- `/` — Home
-- `/proyectos/` — Proyectos
-- `/nosotros/` — Nosotros
-- `/contacto/` — Contacto (formulario con validación JS y almacenamiento en BD)
-- `/panel/` — Panel de administración (requiere autenticación)
+## Enlaces del Proyecto
+* **Despliegue en Render:** https://linea-pura.onrender.com
 
-## Autenticación
+---
 
-- `/cuentas/registro/` — Registro (acceso restringido a usuarios permitidos)
-- `/cuentas/validar/` — Validación de cuenta por código
-- `/cuentas/login/` — Inicio de sesión
-- `/cuentas/logout/` — Cierre de sesión
+## Estructura del Sitio y Requisitos
 
-## API
+### Páginas
+* **Home (`/`)**: Página principal.
+* **Proyectos (`/proyectos/`)**: Galería de trabajos del estudio.
+* **Nosotros (`/nosotros/`)**: Información sobre el estudio.
+* **Contacto (`/contacto/`)**: Formulario con validaciones en JS, clasificación por palabras clave y almacenamiento en BD.
 
-### API Propia (DRF)
-- **`GET /api/consultas/`** — Devuelve en JSON todas las consultas recibidas desde el formulario de contacto.
+---
 
-### API Externa consumida
-- **Open-Meteo** — `https://api.open-meteo.com/v1/forecast`
-  - Muestra el clima actual en Buenos Aires (temperatura y viento) en la página principal.
-  - Gratuita, sin API key requerida.
-  - Documentación: https://open-meteo.com/en/docs
+### Detalles Técnicos
+* **Formularios:** Django Forms (`studio/forms.py`) con validaciones JS en `static/studio/js/contacto.js`.
+* **Clasificación de Mensajes:** Modelo `Consulta` (`studio/models.py`) que clasifica automáticamente el mensaje en base a palabras clave (Comercial, Técnica, RRHH o General).
+* **Autenticación restringida:** Registro (`/cuentas/registro/`) limitado a la tabla `UsuarioPermitido`. Envío de código de validación, confirmación en `/cuentas/validar/` y posterior inicio de sesión.
+* **Panel de Administración:** Ruta protegida en `/panel/` con métricas (cantidad total y por categoría) y listado de consultas para visualizar, editar y eliminar.
+* **Consumo de API Externa:** Open-Meteo API (`https://api.open-meteo.com/v1/forecast`) consultada desde el backend.
+* **API REST Propia:** Endpoint `/api/consultas/` desarrollado con Django REST Framework para consultar registros en JSON.
+* **SMTP Ferozo:** Envío de correos por puerto 465 SSL. Cuenta con backend personalizado en `linea_pura/email_backend.py` para ignorar la verificación estricta de SSL auto-firmado de Ferozo y `EMAIL_TIMEOUT = 5` en `settings.py` para evitar cuelgues en Render.
 
-## Configuración
+---
 
-### Base de datos (PostgreSQL)
+## Instalación y Ejecución Local
 
-Editar `linea_pura/settings.py` con los datos de conexión:
+1. Instalar dependencias:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'linea_pura_db',
-        'USER': 'postgres',       # Tu usuario de PostgreSQL
-        'PASSWORD': '',           # Tu contraseña
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-```
+2. Ejecutar migraciones (crea tablas y carga usuarios autorizados):
+   ```bash
+   python manage.py migrate
+   ```
 
-Crear la base de datos:
-```bash
-createdb linea_pura_db
-```
+3. Iniciar el servidor local:
+   ```bash
+   python manage.py runserver
+   ```
 
-### Email SMTP
+---
 
-Editar `linea_pura/settings.py` con las credenciales asignadas:
+## Cuentas y Códigos de Prueba Mock
 
-```python
-EMAIL_HOST_USER = 'tu_correo@dominio.com'
-EMAIL_HOST_PASSWORD = 'tu_contraseña'
-```
+Cuentas precargadas en la tabla `UsuarioPermitido` para validación:
 
-### Instalación
-
-```bash
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
-```
-
-## Clasificación de consultas
-
-Las consultas del formulario se clasifican automáticamente:
-
-| Categoría         | Palabras clave                        |
-|-------------------|---------------------------------------|
-| Consulta Comercial | precio, costo, tarifa, compra        |
-| Consulta Técnica   | soporte, error, problema, ayuda      |
-| Consulta de RRHH   | trabajo, CV, empleo, linkedin        |
-| Consulta General   | (sin palabras clave específicas)     |
+| Correo Autorizado | Código de Validación |
+|---------------------------|----------------------|
+| `annavillegas@live.com.ar` | `LPA2024AV` |
+| `ramiro.marcos.ck@gmail.com` | `LPA2024RM` |
